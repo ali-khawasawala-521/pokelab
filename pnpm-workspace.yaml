@@ -1,0 +1,4 @@
+onlyBuiltDependencies:
+  - '@hebilicious/vue-query-nuxt'
+  - esbuild
+  - vue-demi
