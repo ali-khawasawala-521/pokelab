@@ -51,6 +51,10 @@ const resetPokemonData = () => {
     pokemon.value = [];
 };
 
+useHead({
+    title: "Pokélab",
+});
+
 watch(isLoading, (val) => {
     document.body.style.overflow = val ? "hidden" : "";
 });

@@ -28,7 +28,7 @@ const onSubmit = () => {
             <Input
                 id="search"
                 type="search"
-                placeholder="Search Pokemon..."
+                placeholder="Search Pokémon..."
                 v-model="searchQuery"
                 class="pr-10 bg-white focus-visible:ring-0"
             />
