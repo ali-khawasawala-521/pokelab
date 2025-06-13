@@ -10,9 +10,9 @@ defineProps<{
         :class="`flex flex-col md:flex-row justify-between items-center gap-2 px-6 py-2 min-h-20 ${background || 'bg-blue-500'}`"
     >
         <!-- Logo -->
-        <div>
+        <NuxtLink to="/">
             <PokemonLogo class="w-24 h-auto" />
-        </div>
+        </NuxtLink>
         <!-- Search Bar -->
         <SearchBar />
     </header>

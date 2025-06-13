@@ -12,17 +12,22 @@ const limit = ref<[number, number]>([0, 50]);
 const pokemon = ref<Pokemon[]>([]);
 const isLoading = ref<boolean>(false);
 const searchQuery = ref<string | null>(null);
+const currentListData = ref<NamedAPIResource[]>([]);
 const searchListData = ref<NamedAPIResource[]>([]);
+const showGoTopButton = ref<boolean>(false);
+
+const canSearch = computed(() => {
+    return searchQuery.value !== null && searchQuery.value !== "";
+});
 const canLoadMore = computed(() => {
     if (searchQuery.value) {
         return pokemon.value.length < searchListData.value.length;
     } else {
-        return pokemon.value.length < localListData.value.length;
+        return pokemon.value.length < currentListData.value.length;
     }
 });
 
-const loadPokemon = async (list?: NamedAPIResource[]) => {
-    if (!list) return;
+const loadPokemon = async (list: NamedAPIResource[]) => {
     const data = list.slice(limit.value[0], limit.value[1]);
     isLoading.value = true;
     const newPokemon = await Promise.all(data.map((d) => fetchPokemonData(d)));
@@ -34,15 +39,23 @@ const loadMore = () => {
     if (canLoadMore.value) {
         isLoading.value = true;
         limit.value = [limit.value[1], limit.value[1] + 50];
-        loadPokemon(localListData.value);
+        loadPokemon(currentListData.value);
     }
 };
 
-const searchPokemon = () => {
-    const searchList = localListData.value.filter((p) =>
-        p.name.toLowerCase().includes(searchQuery?.value?.toLowerCase() || ""),
+const handleSearchAndFilter = (list: NamedAPIResource[] | null) => {
+    const listData = list ? list : localListData.value;
+    currentListData.value = listData;
+
+    const searchList = listData.filter((p) =>
+        canSearch
+            ? p.name
+                  .toLowerCase()
+                  .includes(searchQuery?.value?.toLowerCase() || "")
+            : true,
     ) as NamedAPIResource[];
     searchListData.value = searchList;
+    resetPokemonData();
     loadPokemon(searchList);
 };
 
@@ -51,9 +64,13 @@ const resetPokemonData = () => {
     pokemon.value = [];
 };
 
-useHead({
-    title: "Pokélab",
-});
+const handleScroll = () => {
+    showGoTopButton.value = window.scrollY > 400;
+};
+
+const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+};
 
 watch(isLoading, (val) => {
     document.body.style.overflow = val ? "hidden" : "";
@@ -63,29 +80,40 @@ watch(route, () => {
     resetPokemonData();
     if (route.query?.search) {
         searchQuery.value = route.query.search as string;
-        searchPokemon();
+        handleSearchAndFilter(currentListData.value);
     } else {
         searchQuery.value = null;
-        loadPokemon(localListData.value);
+        currentListData.value = localListData.value;
+        loadPokemon(currentListData.value);
     }
 });
 
 onMounted(() => {
+    window.addEventListener("scroll", handleScroll);
+
     fetchPokemonList().then((list) => {
+        currentListData.value = list;
         if (route.query?.search) {
             searchQuery.value = route.query.search as string;
-            searchPokemon();
+            handleSearchAndFilter(list);
         } else {
             loadPokemon(list);
         }
     });
 });
+
+onBeforeUnmount(() => {
+    window.removeEventListener("scroll", handleScroll);
+});
 </script>
 
 <template>
-    <div
-        class="flex-1 flex flex-col justify-center items-center gap-4 py-2 overflow-hidden"
-    >
+    <div class="container grow-2 flex flex-col items-center gap-4 py-2 mx-auto">
+        <div
+            class="w-full flex justify-center md:justify-end items-center gap-4 px-4"
+        >
+            <TypeSelector @select:pokemonType="handleSearchAndFilter" />
+        </div>
         <div
             v-if="pokemon?.length"
             class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4"
@@ -104,10 +132,26 @@ onMounted(() => {
         >
             <PokemonLoading />
         </div>
-        <div v-if="!pokemon?.length && !isLoading">
+        <div
+            v-if="!pokemon?.length && !isLoading"
+            class="grow-2 flex items-center"
+        >
             <EmptyPokeball />
         </div>
+        <Transition>
+            <GoTop v-show="showGoTopButton" @click="scrollToTop" />
+        </Transition>
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.3s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+</style>

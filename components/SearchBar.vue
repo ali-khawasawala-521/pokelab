@@ -2,11 +2,6 @@
 import { Search } from "lucide-vue-next";
 import { Input } from "~/components/ui/input";
 
-interface Item {
-    value: string;
-    label: string;
-}
-
 const router = useRouter();
 const route = useRoute();
 
@@ -20,6 +15,18 @@ const onSubmit = () => {
         },
     });
 };
+
+watch(route, () => {
+    if (route.query?.search) {
+        searchQuery.value = route.query.search as string;
+    }
+});
+
+onMounted(() => {
+    if (route.query?.search) {
+        searchQuery.value = route.query.search as string;
+    }
+});
 </script>
 
 <template>
@@ -30,6 +37,7 @@ const onSubmit = () => {
                 type="search"
                 placeholder="Search Pokémon..."
                 v-model="searchQuery"
+                update:modelValue="onClear"
                 class="pr-10 bg-white focus-visible:ring-0"
             />
             <button
