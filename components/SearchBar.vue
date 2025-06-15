@@ -8,7 +8,8 @@ const route = useRoute();
 const searchQuery = ref("");
 
 const onSubmit = () => {
-    router.replace({
+    router.push({
+        path: "/",
         query: {
             ...route.query,
             search: searchQuery.value || undefined,

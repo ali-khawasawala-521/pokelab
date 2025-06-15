@@ -8,7 +8,7 @@ defineProps<{
 
 <template>
     <footer
-        :class="`flex flex-col lg:flex-row justify-center lg:justify-between items-center gap-4 px-4 py-2 text-[#f0f0f0] ${isTransparent ? 'bg-[#262626]/50' : 'bg-[#262626]'}`"
+        :class="`flex flex-col lg:flex-row justify-center lg:justify-between items-center gap-4 px-4 py-2 text-[#f0f0f0] ${isTransparent ? 'bg-black/50' : 'bg-black'}`"
     >
         <!-- Powered By -->
         <a

@@ -12,6 +12,8 @@ import type {
   PokedexNumber,
   Variety,
   Type,
+  Stat,
+  ChainLink,
 } from "./base";
 
 export interface Response {
@@ -37,6 +39,7 @@ export interface PokemonResponse {
   species: NamedAPIResource;
   types: Type[];
   sprites: Record<string, any>;
+  stats: Stat[];
 }
 
 export interface PokemonSpeciesResponse {
@@ -69,4 +72,10 @@ export interface PokemonSpeciesResponse {
   pokedex_numbers: PokedexNumber[];
   shape: NamedAPIResource;
   varieties: Variety[];
+}
+
+export interface EvolutionChainReponse {
+  baby_trigger_item: any;
+  chain: ChainLink;
+  id: number;
 }

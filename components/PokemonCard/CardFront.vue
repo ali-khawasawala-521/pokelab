@@ -52,7 +52,9 @@ const bgImage = computed(() => {
             />
         </div>
         <div class="flex items-center justify-between gap-4 text-xl">
-            <p class="font-medium capitalize">{{ pokemon.name }}</p>
+            <p class="font-medium capitalize">
+                {{ sanitizeText(pokemon.name) }}
+            </p>
             <p>{{ japaneseName }}</p>
         </div>
     </div>

@@ -10,7 +10,7 @@ const { fetchPokemonData } = usePokemon();
 
 const limit = ref<[number, number]>([0, 50]);
 const pokemon = ref<Pokemon[]>([]);
-const isLoading = ref<boolean>(false);
+const isLoading = ref<boolean>(true);
 const searchQuery = ref<string | null>(null);
 const currentListData = ref<NamedAPIResource[]>([]);
 const searchListData = ref<NamedAPIResource[]>([]);
@@ -108,7 +108,9 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div class="container grow-2 flex flex-col items-center gap-4 py-2 mx-auto">
+    <main
+        class="container grow-2 flex flex-col items-center gap-4 py-2 mx-auto"
+    >
         <div
             class="w-full flex justify-center md:justify-end items-center gap-4 px-4"
         >
@@ -141,7 +143,7 @@ onBeforeUnmount(() => {
         <Transition>
             <GoTop v-show="showGoTopButton" @click="scrollToTop" />
         </Transition>
-    </div>
+    </main>
 </template>
 
 <style scoped>

@@ -108,14 +108,14 @@ const pokemonBasicInfo = computed(() => {
                     <p class="text-xl font-black text-white/30">
                         {{ japaneseName }}
                     </p>
-                    <!-- <NuxtLink
-                        to="/"
+                    <NuxtLink
+                        :to="`/${pokemon.name}`"
                         class="group text-foreground border border-foreground rounded-full p-1"
                     >
                         <MoveRight
                             class="size-4 group-hover:-rotate-45 transition duration-300"
                         />
-                    </NuxtLink> -->
+                    </NuxtLink>
                 </div>
             </div>
         </div>

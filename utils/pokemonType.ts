@@ -28,6 +28,27 @@ export const typeColorMap: Record<string, string> = {
   steel: "bg-pokemon-steel",
 };
 
+export const typeBorderColorMap: Record<string, string> = {
+  fire: "border-pokemon-fire",
+  water: "border-pokemon-water",
+  grass: "border-pokemon-grass",
+  electric: "border-pokemon-electric",
+  psychic: "border-pokemon-psychic",
+  ice: "border-pokemon-ice",
+  dragon: "border-pokemon-dragon",
+  dark: "border-pokemon-dark",
+  fairy: "border-pokemon-fairy",
+  normal: "border-pokemon-normal",
+  fighting: "border-pokemon-fighting",
+  flying: "border-pokemon-flying",
+  poison: "border-pokemon-poison",
+  ground: "border-pokemon-ground",
+  rock: "border-pokemon-rock",
+  bug: "border-pokemon-bug",
+  ghost: "border-pokemon-ghost",
+  steel: "border-pokemon-steel",
+};
+
 export const typeImageMap: Record<string, any> = {
   fire: getTypeSvg("fire"),
   water: getTypeSvg("water"),

@@ -22,7 +22,6 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@nuxt/fonts",
     "shadcn-nuxt",
-    "@hebilicious/vue-query-nuxt",
     "@vueuse/nuxt",
     "nuxt-lodash",
   ],
@@ -36,12 +35,5 @@ export default defineNuxtConfig({
   shadcn: {
     prefix: "",
     componentDir: "./components/ui",
-  },
-  vueQuery: {
-    stateKey: "vue-query-nuxt",
-    queryClientOptions: {
-      defaultOptions: { queries: { staleTime: 60 * 60 * 1000 } }, // 1 hour
-    },
-    vueQueryPluginOptions: { enableDevtoolsV6Plugin: true },
   },
 });
