@@ -41,7 +41,7 @@ const audios = computed(() =>
 
 <template>
     <TabsContent value="media">
-        <div class="lg:overflow-auto lg:tab-height">
+        <div class="lg:overflow-auto tab-height">
             <div class="flex flex-col gap-4">
                 <div
                     class="flex flex-wrap justify-center lg:justify-start items-center gap-4"

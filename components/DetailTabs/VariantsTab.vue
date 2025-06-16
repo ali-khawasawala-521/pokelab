@@ -17,7 +17,7 @@ onMounted(async () => {
 
 <template>
     <TabsContent value="variants">
-        <div class="lg:overflow-auto lg:tab-height">
+        <div class="lg:overflow-auto tab-height">
             <div class="flex flex-wrap justify-center gap-2">
                 <NuxtLink
                     v-for="variant in variants"

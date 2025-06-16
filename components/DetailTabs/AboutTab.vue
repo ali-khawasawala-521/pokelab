@@ -211,7 +211,7 @@ const toggleVersion = (ver: string) => {
 
 <template>
     <TabsContent value="about">
-        <div class="lg:overflow-auto lg:tab-height">
+        <div class="lg:overflow-auto tab-height">
             <div class="flex flex-col gap-6">
                 <div class="flex flex-col gap-1">
                     <h2>Story</h2>
