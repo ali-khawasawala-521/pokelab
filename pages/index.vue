@@ -109,7 +109,7 @@ onBeforeUnmount(() => {
 
 <template>
     <main
-        class="container grow-2 flex flex-col items-center gap-4 py-2 mx-auto"
+        class="grow-2 flex flex-col items-center gap-4 py-2 overflow-auto tab-height"
     >
         <div
             class="w-full flex justify-center md:justify-end items-center gap-4 px-4"

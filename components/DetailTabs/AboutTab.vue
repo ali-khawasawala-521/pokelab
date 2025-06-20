@@ -124,79 +124,77 @@ const statChartMaxValue = computed(
 );
 
 const statChartOptions = computed(() => ({
-    responsive: false,
-    maintainAspectRatio: false,
-    indexAxis: "y",
-    plugins: {
-        legend: {
-            display: false,
+    chart: {
+        id: "pokemon-stats-chart",
+        width: 500,
+        toolbar: {
+            show: false,
         },
-        tooltip: {
-            enabled: false,
+        fontFamily: "Poppins, sans-serif",
+    },
+    plotOptions: {
+        bar: {
+            borderRadius: 4,
+            borderRadiusApplication: "around",
+            barHeight: "50%",
+            horizontal: true,
+            colors: {
+                backgroundBarColors: ["#f0f0f0"],
+                backgroundBarOpacity: 0.5,
+                backgroundBarRadius: 4,
+            },
         },
     },
-    scales: {
-        x: {
-            grid: {
-                display: false,
-            },
-            ticks: {
-                display: false,
-            },
-            border: {
-                display: false,
-            },
+    grid: {
+        show: false,
+    },
+    xaxis: {
+        categories: pokemon.stats.map((stat) => statsLabels[stat.stat.name]),
+        axisBorder: {
+            show: false,
         },
-        y: {
-            grid: {
-                display: false,
-            },
-            ticks: {
-                color: "#262626",
-            },
-            border: {
-                display: false,
-            },
-            min: 0,
-            max: statChartMaxValue.value,
-            stacked: true,
+        axisTicks: {
+            show: false,
+        },
+        labels: {
+            show: false,
         },
     },
-}));
-
-const statChartData = computed(() => ({
-    labels: pokemon.stats.map((stat) => statsLabels[stat.stat.name]),
-    datasets: [
-        {
-            label: "Value",
-            data: pokemon.stats.map((stat) => stat.base_stat),
-            backgroundColor: ["#f5f5f5", "#FCF5E5"],
-            barThickness: 6,
-            stack: "stack1",
-            categoryPercentage: 0.2,
-            barPercentage: 1.0,
-            datalabels: {
-                color: "#262626",
-                anchor: "end",
-                align: "end",
+    yaxis: {
+        labels: {
+            style: {
+                fontSize: "14px",
+                fontWeight: "300",
             },
+            offsetY: 3,
         },
+    },
+    dataLabels: {
+        style: {
+            fontSize: "12px",
+            colors: ["#262626"],
+        },
+    },
+    responsive: [
         {
-            label: "Max Value",
-            data: pokemon.stats.map(
-                (stat) => statChartMaxValue.value - stat.base_stat,
-            ),
-            backgroundColor: "rgba(240,240,240,0.3)",
-            barThickness: 6,
-            stack: "stack1",
-            categoryPercentage: 0.2,
-            barPercentage: 1.0,
-            datalabels: {
-                display: false,
+            breakpoint: 768,
+            options: {
+                chart: {
+                    height: 300,
+                    width: 300,
+                },
             },
         },
     ],
 }));
+
+const statChartSeries = computed(() => [
+    {
+        name: "Base Stat",
+        data: pokemon.stats.map((stat) => stat.base_stat),
+        color: ["#f0f0f0"],
+    },
+]);
 
 const toggleVersion = (ver: string) => {
     versions.value = ver;
@@ -274,8 +272,8 @@ const toggleVersion = (ver: string) => {
                     <h2>Stats</h2>
                     <div class="w-max-sm lg:w-max-md">
                         <BarChart
-                            :chartData="statChartData"
-                            :chartOptions="statChartOptions"
+                            :series="statChartSeries"
+                            :options="statChartOptions"
                         />
                     </div>
                 </div>
